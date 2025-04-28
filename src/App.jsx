@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import {
+  Center,
+  Box,
+  Flex,
+
+} from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  defaultConfig,
+  defineConfig
+  ,createSystem,
+  
+} from '@chakra-ui/react';
+import PersonalDetails from './components/PersonalDetails';
+import Skills from './components/Skills';
+import Certificates from './components/Certificates';
+import Experience from './components/Experience';
+import Projects from './components/Projects';
+
+
+const customConfig = defineConfig({
+  globalCss: {
+    body:{
+      bg: '#160f30'
+    },
+    fonts: {
+      body: 'Montserrat, sans-serif;'
+    }
+  },
+})
+
+export const system = createSystem(defaultConfig, customConfig)
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+<ChakraProvider value={system}>
+      <Center scrollBehavior="smooth">
+        <Box m={8}>
+        <Flex direction={{lg:'row', base: 'column'}}>
+          <Flex flexDirection={'column'} mr={{lg: '32px'}}>
+            <Box>
+              <PersonalDetails/>
+            </Box>
+            <Box mt={'32px'}>
+               <Experience/>
+            </Box>
+            <Box mt={'32px'}>
+              <Certificates/>
+            </Box>
+          </Flex>
+
+        
+        
+          <Box mt={{base: '32px', lg: '0px'}}>
+              <Flex direction={'column'}>
+                  <Box>
+                     <Skills/> 
+                  </Box>
+                  <Box marginTop={'32px'}>
+                    <Projects/> 
+                  </Box>
+              </Flex>
+          </Box>
+        </Flex>
+        
+        </Box>
+      </Center>
+    
+    </ChakraProvider>
+  );
 }
 
-export default App
+export default App;
